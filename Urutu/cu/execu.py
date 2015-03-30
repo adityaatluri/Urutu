@@ -50,9 +50,9 @@ class cu_exe:
 		self.nam_args = arg_nam
 		self.argl = len(args)
 		for i in range(len(args)):
-			start = time()
+			start = time.time()
 			self.cu_args.append(cuda.mem_alloc(args[i].nbytes))
-			end = time()
+			end = time.time()
 			self.malloc_times.append(end - start)
 		
 	def htod(self,arg_nam):
