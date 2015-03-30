@@ -65,7 +65,7 @@ class cu_exe:
 		start = time.time()
 		cuda.memcpy_htod(self.cu_args[index],self.args[index])
 		end = time.time()
-		self.htod_append(end - start)
+		self.htod_times.append(end - start)
 
 	def flags(self):
 		for i in self.nam_args:
@@ -101,7 +101,7 @@ class cu_exe:
 		var_id = self.nam_args.index(nam)
 		start = time.time()
 		cuda.memcpy_dtoh(self.args[var_id], self.cu_args[var_id])
-		end = end.time()
+		end = time.time()
 		self.dtoh_times.append(end - start)
 #		cuda.memcpy_dtoh(self.returns[i],self.cu_args[self.id_ret[i]])
 
