@@ -6,25 +6,29 @@
 from cl import cl_test
 from cu import ur_cuda
 
+def import_opencl():
+	pyopencl = False
+	try:
+		import pyopencl
+		pyopencl = True
+	except:
+		pyopencl = False
+	return pyopencl
+
+
+def import_cuda():
+	pycuda = False
+	try:
+		import pycuda
+		pycuda = True
+	except:
+		pycuda = False
+	return pycuda
+
+
 def Urutu(arg):
 	def wrap(fn):
 		def inner(*args,**kargs):
-			def import_opencl():
-				pyopencl = False
-				try:
-					import pyopencl
-					pyopencl = True
-				except:
-					pyopencl = False
-				return pyopencl
-			def import_cuda():
-				pycuda = False
-				try:
-					import pycuda
-					pycuda = True
-				except:
-					pycuda = False
-				return pycuda
 			if arg == "CL":
 				cl_ = cl.cl_test(fn,args)
 				return cl_.execute()
@@ -49,3 +53,33 @@ def Urutu(arg):
 				return
 		return inner
 	return wrap
+
+class urutu(object):
+	Arg = ""
+	def __init__(self, arg):
+		self.Arg = arg
+	def map(self, *args):
+		if self.Arg == "CL":
+			cl_ = cl.cl_test(args[0],args[1:])
+			return cl_.execute()
+		elif self.Arg == "CU":
+			cu_ = cu.ur_cuda(args[0],args[1:])
+			return cu_.execute()
+		elif self.Arg == "gpu":
+			if import_cuda() is True:
+				cu__ = cu.ur_cuda(args[0],args[1:])
+				return cu__.execute()
+			else:
+				print "CUDA is not found on this machine"
+				print "Switching to OpenCL..."
+				if import_opencl():
+					cl__ = cl.cl_test(args[0],args[1:])
+					print "PyOpenCL"
+					return cl__.execute()
+				else:
+					print "CUDA and OpenCL are not found on this machine"
+		else:
+			print "CUDA and OpenCL APIs are not found in this machine."
+			return
+
+

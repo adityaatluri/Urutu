@@ -1025,9 +1025,13 @@ class ur_cuda:
 			self.kernel += "}\n"
 			self.kernel = self.kernel + self.dp_code
 			"""From here, the __device__ function gets filled instead of __global__"""
-		self.sentences = self.code.split("\n")
-		self.sentences.remove(self.sentences[1])
-		self.sentences.remove(self.sentences[-2])
+		self.sentences = self.code.split('\n')
+		if self.keys.index('def') == 0:
+			self.sentences[0] = '@Urutu("gpu")'
+			self.sentences.remove(self.sentences[-2])
+		else:
+			self.sentences.remove(self.sentences[1])
+			self.sentences.remove(self.sentences[-2])
 #		print self.kernel, "Entering body()"
 		if self.return_kernel == False:
 			np_args = []
