@@ -13,7 +13,7 @@ def main():
 	y = np.random.randint(10, size = N)
 	d = np.empty_like(x)
 	a, b = 1.0, 2.0
-	print daxpy([500,1,1],[N/500,1,1],d,a,x,b,y)
+	daxpy([500,1,1],[N/500,1,1],d,a,x,b,y)
 
 if __name__ == '__main__':
 	main()

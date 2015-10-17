@@ -12,7 +12,7 @@ def main():
 	y = np.random.randint(10, size = N)
 	d = np.empty_like(x)
 	a, b = 1.0, 2.0
-	print daxpy(d,a,x,b,y)
+	daxpy(d,a,x,b,y)
 	if a*x[0] + b*y[0] == d[0]:
 		print "Success"
 

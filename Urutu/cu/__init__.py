@@ -102,11 +102,11 @@ class ur_cuda:
 		if type(args[0]) is list and type(args[1]) is not list:
 			self.threads = args[0]
 			self.args = args[1:]
-		if type(args[0]) is list and type(args[1]) is list:
+		elif type(args[0]) is list and type(args[1]) is list:
 			self.threads = args[0]
 			self.blocks = args[1]
 			self.args = args[2:]
-		if args[0] == "retstr":
+		elif args[0] == "retstr":
 			self.return_kernel = True
 			self.args = args[1:]
 		else:
